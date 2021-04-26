@@ -46,6 +46,4 @@ providers: [BaseApiService,
 yarn install
 
 ng serve
-```
-
-3. 
+``` 
