@@ -6,22 +6,46 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## HOW TO USE
+This Application can be used as a base application and additional functionality can be built on top
 
-## Build
+Use BaseApiService implementation for making API calls to external resources. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## For integration into other applications 
+Copy the contents of loader, services and base implementation of AppComponent into desired project. 
 
-## Running unit tests
+1. Loader Component provides the skeleton of loader. 
+2. Loader Service maintains track of all API calls and disables the loader only after the execution of all the API calls is completed. 
+3. Base API Service gives the implementation of All types of API calls and calls the loader service to show and disable the loader
+4. base-url-provider provides the config values in a Map. To use the config values, make a dependency injection and use it like this. 
+```js
+  constructor(
+      @Inject('BASE_URL_VALUE_PROVIDER') private config: BaseConfigValues,
+  ) {
+    this._url = this.config.value.get('BASE_URL')!;
+    console.log({
+      "BASE_URL": this._url
+    }); 
+   }
+}
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Provider needs to be defined in app.module.ts in following way 
+```js 
+providers: [BaseApiService,
+    { provide: 'BASE_URL_VALUE_PROVIDER', useClass: BaseConfigValues}
+  ],
+```
 
-## Running end-to-end tests
+## To run this Demo Project
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+1. Clone the project
+2. Run 
+```shell
+yarn install
 
-## Further help
+ng serve
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3. 
