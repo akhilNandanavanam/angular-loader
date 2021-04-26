@@ -18,6 +18,16 @@ Copy the contents of loader, services and base implementation of AppComponent in
 1. Loader Component provides the skeleton of loader. 
 2. Loader Service maintains track of all API calls and disables the loader only after the execution of all the API calls is completed. 
 3. Base API Service gives the implementation of All types of API calls and calls the loader service to show and disable the loader
+```js
+constructor(
+    private baseApiService: BaseApiService){}
+  btnClick(){
+    this.baseApiService.get({route: 'my-route'}).subscribe(res=>{
+      console.log(JSON.stringify(res,null,4));
+    });
+  }
+```
+
 4. base-url-provider provides the config values in a Map. To use the config values, make a dependency injection and use it like this. 
 ```js
   constructor(
